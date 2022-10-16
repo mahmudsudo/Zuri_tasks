@@ -13,12 +13,12 @@ function loginUser($email, $password){
     from file match that which is passed from the form
     */
    
-    $myfile=fopen("../storage/users.csv","a+");
+    $myfile=fopen("../storage/users.csv","r");
     while(!feof($myfile)) {
-        $ine = (array) json_decode(fgets($myfile, filesize("../storage/users.csv")),true);
-        if (in_array($email,array_values($ine)) && in_array($password,array_values($ine)) ){
+        $ine = fgetcsv($myfile, filesize("../storage/users.csv"));
+        if (in_array($email,$ine) && in_array($password,$ine) ){
             session_start();
-            $_SESSION["username"]=$ine['username'];
+            $_SESSION["username"]=$ine[0];
             header("Location: ../dashboard.php");
             break;
         }
@@ -27,5 +27,6 @@ function loginUser($email, $password){
       fclose($myfile);
     
 }
+
 
 

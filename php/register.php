@@ -12,7 +12,7 @@ function registerUser($username, $email, $password){
     //save data into the file
  $file=  fopen("../storage/users.csv","a");
  $arr = ["username"=>$username,"email"=>$email,"password"=>$password];
- fwrite($file,json_encode($arr));
+ fputcsv($file,$arr);
  fclose($file);
    echo "User Successfully registered";
 }
